@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Profiles;
-
+use App\Profile;
 use App\History2;
-
 use Carbon\Carbon;
 
 class ProfileController extends Controller
@@ -21,49 +19,68 @@ class ProfileController extends Controller
     
     public function edit(Request $request)
     {
-        $profiles = Profiles::find($request->id);
-        if(empty($profiles)) {
+        $profile = Profile::find($request->id);
+        if(empty($profile)) {
             abort(404);
         }
-        return view('admin.profile.edit', ['profiles_form' => $profiles]);
+        return view('admin.profile.edit', ['profiles_form' => $profile]);
     }
     public function update(Request $request)
     {
         
-        $this->validate($request, Profiles::$rules);
-        $profiles = Profiles::find($request->id);
+        $this->validate($request, Profile::$rules);
+        $profile = Profile::find($request->id);
         $profiles_form = $request->all();
         
         unset($profiles_form['_token']);
         
-        $profiles->fill($profiles_form)->save();
+        $profile->fill($profiles_form)->save();
         
         $history = new History2;
-        $history->profiles_id = $profiles->id;
+        $history->profile_id = $profile->id;
         $history->edited_at = Carbon::now();
         $history->save();
         
-        return redirect('admin/profile');
+        return redirect('admin/profile/');
     }
     
     public function create(Request $request)
     {
         // 以下を追記
       // Validationを行う
-      $this->validate($request, Profiles::$rules);
+      $this->validate($request, Profile::$rules);
 
-      $profiles = new Profiles;
+      $profile = new Profile;
       $form = $request->all();
 
       // フォームから送信されてきた_tokenを削除する
       unset($form['_token']);
 
       // データベースに保存する
-      $profiles->fill($form);
-      $profiles->save();
+      $profile->fill($form);
+      $profile->save();
 
-      return redirect('admin/profile/create');
+      return redirect('admin/profile/');
     }
+    
+    public function index(Request $request)
+    {
+      $cond_name = $request->cond_name;
+      if ($cond_name != '') {
+          $posts = Profile::where('name', $cond_name)->get();
+      } else {
+          $posts = Profile::all();
+      }
+      return view('admin.profile.index', ['posts' => $posts, 'cond_name' => $cond_name]);
+    }
+    
+    public function delete(Request $request)
+    {
+    $profile =Profile::find($request->id);
+    $profile->delete();
+    return redirect('admin/profile/');
+    }
+    
 }
 
 ?>
