@@ -13,7 +13,7 @@
         <script src="{{ secure_asset('js/app.js') }}" defer></script>
         
         <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleeapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
         
         <link href="{{ secure_asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ secure_asset('css/front2.css') }}" rel="stylesheet">
@@ -24,7 +24,7 @@
             <nav class="navbar navbar-expand-md navber-dark navber-laravel">
                 <div class="container">
                     <a class="navber-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'laravel') }}
+                        {{ config('app.name', 'Laravel') }}
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="narvar-toggler-icon"></span>

@@ -7,3 +7,12 @@ body {
   height: 82px;
 }
 
+.posts .post .name {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.posts .post .body {
+  font-size: 0.8em;
+}
+
